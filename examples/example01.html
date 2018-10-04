@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>guide.js - example 01</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700" rel="stylesheet">
+	<link href="../dist/guidejs.min.css" rel="stylesheet">
+	<link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+	<div class="container pt-5">
+	
+		<div class="card">
+
+			<div class="card-body">
+
+				<form>
+
+					<h2 class="mb-3">Application form</h2>
+
+					<h3 class="text-muted">Personal information</h3>
+					
+					<div class="row" data-guidejs="1" data-guidejs-text="This is some very informative text about the highlighted section." data-guidejs-outline>
+
+						<div class="form-group col-12 col-sm-4">
+							<lable>Gender*</lable>
+							<select class="form-control">
+								<option disabled selected>Please select</option>
+								<option value="f">Female</option>
+								<option value="m">Male</option>
+							</select>
+						</div>
+
+						<div class="form-group col-12 col-sm-4">
+							<lable>First name*</lable>
+							<input type="text" class="form-control" placeholder="Please fill in">
+						</div>
+
+						<div class="form-group col-12 col-sm-4">
+							<lable>Last name*</lable>
+							<input type="text" class="form-control" placeholder="Please fill in">
+						</div>
+
+						<div class="form-group col-12 col-sm-3">
+							<lable>Address</lable>
+							<input type="text" class="form-control" placeholder="Please fill in">
+						</div>
+
+						<div class="form-group col-12 col-sm-2">
+							<lable>Zip code</lable>
+							<input type="text" class="form-control" placeholder="Please fill in">
+						</div>
+
+						<div class="form-group col-12 col-sm-2">
+							<lable>City</lable>
+							<input type="text" class="form-control" placeholder="Please fill in">
+						</div>
+
+						<div class="form-group col-12 col-sm-2">
+							<lable>State</lable>
+							<input type="text" class="form-control" placeholder="Please fill in">
+						</div>
+
+						<div class="form-group col-6 col-sm-3">
+							<lable>Country</lable>
+							<select class="form-control">
+								<option disabled selected>Please select</option>
+								<option>Germany</option>
+								<option>United Kingdom</option>
+								<option>United States of America</option>
+							</select>
+						</div>
+
+					</div>
+
+					<hr>
+
+					<h3 class="text-muted">My application</h3>
+					
+					<div class="row" data-guidejs="2" data-guidejs-text="This is an even more informative text about the very important highlighted section." data-guidejs-outline>
+
+						<div class="form-group col-12">
+							<lable>I want to apply for*</lable>
+							<input type="text" class="form-control" placeholder="Please fill in">
+						</div>
+
+						<div class="form-group col-12 col-sm-6">
+							<lable>Another text field</lable>
+							<input type="text" class="form-control" placeholder="Please fill in">
+						</div>	
+
+						<div class="form-group col-12 col-sm-6">
+							<lable>Another text field</lable>
+							<input type="text" class="form-control" placeholder="Please fill in">
+						</div>	
+
+						<div class="form-group col-12 col-sm-4">
+							<lable>Another text field</lable>
+							<input type="text" class="form-control" placeholder="Please fill in">
+						</div>	
+
+						<div class="form-group col-12 col-sm-4">
+							<lable>Another text field</lable>
+							<input type="text" class="form-control" placeholder="Please fill in">
+						</div>	
+
+						<div class="form-group col-12 col-sm-4">
+							<lable>Another text field</lable>
+							<input type="text" class="form-control" placeholder="Please fill in">
+						</div>						
+
+					</div>
+
+					<hr>
+
+					<h3 class="text-muted">Additional</h3>
+					
+					<div class="row" data-guidejs="3" data-guidejs-text="This text is also very informative." data-guidejs-outline>
+
+						<div class="form-group col-12">
+							<lable>Extra information</lable>
+							<textarea class="form-control" placeholder="Fill in if you want" rows="10"></textarea>
+						</div>
+
+					</div>
+
+					<div class="mt-4">
+						<button class="btn btn-danger">Print my application</button>
+						<button class="btn btn-primary float-right">Send my application</button>
+					</div>
+
+				</form>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+	<script src="../dist/guidejs-jquery.min.js"></script>
+	
+	<script>
+		
+		$(function() {
+
+			$("body").guide({
+				autostart: true,
+				classes: {
+					nextBtn: "btn btn-success btn-sm",
+					prevBtn: "btn btn-default btn-sm",
+				}
+			});
+		});
+
+	</script>
+
+</body>
+</html>

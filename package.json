@@ -1,0 +1,19 @@
+{
+  "name": "guide.js",
+  "version": "0.0.1",
+  "description": "Simple guide for websites and web applications",
+  "license": "GPL",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tamajoo/guide.js"
+  },
+  "devDependencies": {
+    "grunt": "~1.0.3",
+    "grunt-contrib-sass": "latest",
+    "grunt-postcss": "latest",
+    "autoprefixer": "latest",
+    "grunt-contrib-cssmin": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "latest"
+  }
+}
