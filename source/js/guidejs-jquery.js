@@ -137,10 +137,6 @@
 
             var $wrap = $('<div class="gjs-foc ' + this.options.classes.focusContainer + '"></div>');
 
-            if(!this.$stepElem.length) {
-                return this.stop();
-            }
-
             if(this.$stepElem.is("[data-guidejs-outline]")) {
                 $wrap.addClass("gjs-ol");
             }
@@ -156,7 +152,7 @@
 
             this._showButtons();
             this._showText();
-            
+
         },
 
         _showStep: function() {
@@ -164,6 +160,11 @@
             this._clear();
 
             this.$stepElem = this.element.find('[data-guidejs="' + this.step + '"]').first();
+            
+            if(!this.$stepElem.length) {
+                return this.stop();
+            }
+
             this._updateGhost();
             
             var that = this
