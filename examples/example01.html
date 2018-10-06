@@ -20,6 +20,8 @@
 			<div class="card-body">
 
 				<form>
+					
+					<button href="#" id="start" class="btn btn-info btn-lg float-right">Start Guide</button>
 
 					<h2 class="mb-3">Application form</h2>
 
@@ -128,7 +130,7 @@
 
 					<h3 class="text-muted">Additional</h3>
 					
-					<div class="row" data-guidejs="6" data-guidejs-text="This text is also very informative." data-guidejs-outline>
+					<div class="row">
 
 						<div class="form-group col-12">
 							<lable>Extra information</lable>
@@ -137,7 +139,7 @@
 
 					</div>
 
-					<div class="mt-4">
+					<div class="mt-4" data-guidejs="6" data-guidejs-outline>
 						<button class="btn btn-danger">Print my application</button>
 						<button class="btn btn-primary float-right">Send my application</button>
 					</div>
@@ -160,13 +162,15 @@
 		$(function() {
 
 			$("body").guidejs({
-				
-				autostart: true,
 				classes: {
 					nextBtn: "btn btn-success btn-sm",
 					prevBtn: "btn btn-default btn-sm",
 				}
+			});
 
+			$("#start").on('click', function() {
+				$("body").guidejs("start");
+				return false;
 			});
 		});
 

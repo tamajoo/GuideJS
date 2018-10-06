@@ -17,6 +17,8 @@
             },
             delay: null,
 
+            regional: {},
+
             // Callbacks            
             beforeStart: function() {},
             afterStart: function() {},
@@ -75,6 +77,7 @@
             this.element.trigger("guidejs.initialize", [this]);
 
             this.options = $.extend(true, this.options, this.element.data());
+            this.regional = $.extend(true, this.regional, this.options.regional);
             this._setLocale();
 
             this._initOverlay();
@@ -102,8 +105,8 @@
         },
 
         _getText: function(key) {
-            if(this._isDefined(this.regional[this.locale]) && this._isDefined(this.regional[this.locale][key])) {
-                return this.regional[this.locale][key];
+            if(this._isDefined(this.regional[this.options.locale]) && this._isDefined(this.regional[this.options.locale][key])) {
+                return this.regional[this.options.locale][key];
             } else {
                 return this.regional.default[key];
             }
@@ -111,7 +114,7 @@
 
         _setLocale: function() {
             if(!this.options.locale) {
-                var htmlLang = $(document).attr("lang");
+                var htmlLang = $("html").attr("lang");
                 if(this._isDefined(htmlLang)) {
                     this.options.locale = htmlLang;
                 }
