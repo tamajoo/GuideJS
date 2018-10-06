@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>guide.js - example 01</title>
+	<title>GuideJS - example 01</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,60 +20,70 @@
 			<div class="card-body">
 
 				<form>
+					
+					<button href="#" id="start" class="btn btn-info btn-lg float-right">Start Guide</button>
 
 					<h2 class="mb-3">Application form</h2>
 
 					<h3 class="text-muted">Personal information</h3>
 					
-					<div class="row" data-guidejs="1" data-guidejs-text="This is some very informative text about the highlighted section." data-guidejs-outline>
+					<div data-guidejs="1" data-guidejs-text="This is a simple step, using the <code>[data-guidejs-outline]</code> attribute, to add a white outline around the container. As you can see you can also use <strong>HTML</strong> for the text." data-guidejs-outline>
+						
+						<div data-guidejs="2" data-guidejs-text="Without the outline it looks like this.">
 
-						<div class="form-group col-12 col-sm-4">
-							<lable>Gender*</lable>
-							<select class="form-control">
-								<option disabled selected>Please select</option>
-								<option value="f">Female</option>
-								<option value="m">Male</option>
-							</select>
-						</div>
+							<div class="row">
 
-						<div class="form-group col-12 col-sm-4">
-							<lable>First name*</lable>
-							<input type="text" class="form-control" placeholder="Please fill in">
-						</div>
+								<div class="form-group col-12 col-sm-4">
+									<lable>Gender*</lable>
+									<select class="form-control">
+										<option disabled selected>Please select</option>
+										<option value="f">Female</option>
+										<option value="m">Male</option>
+									</select>
+								</div>
 
-						<div class="form-group col-12 col-sm-4">
-							<lable>Last name*</lable>
-							<input type="text" class="form-control" placeholder="Please fill in">
-						</div>
+								<div class="form-group col-12 col-sm-4">
+									<lable>First name*</lable>
+									<input type="text" class="form-control" placeholder="Please fill in">
+								</div>
 
-						<div class="form-group col-12 col-sm-3">
-							<lable>Address</lable>
-							<input type="text" class="form-control" placeholder="Please fill in">
-						</div>
+								<div class="form-group col-12 col-sm-4">
+									<lable>Last name*</lable>
+									<input type="text" class="form-control" placeholder="Please fill in">
+								</div>
 
-						<div class="form-group col-12 col-sm-2">
-							<lable>Zip code</lable>
-							<input type="text" class="form-control" placeholder="Please fill in">
-						</div>
+								<div class="form-group col-12 col-sm-3">
+									<lable>Address</lable>
+									<input type="text" class="form-control" placeholder="Please fill in">
+								</div>
 
-						<div class="form-group col-12 col-sm-2">
-							<lable>City</lable>
-							<input type="text" class="form-control" placeholder="Please fill in">
-						</div>
+								<div class="form-group col-12 col-sm-2">
+									<lable>Zip code</lable>
+									<input type="text" class="form-control" placeholder="Please fill in">
+								</div>
 
-						<div class="form-group col-12 col-sm-2">
-							<lable>State</lable>
-							<input type="text" class="form-control" placeholder="Please fill in">
-						</div>
+								<div class="form-group col-12 col-sm-2">
+									<lable>City</lable>
+									<input type="text" class="form-control" placeholder="Please fill in">
+								</div>
 
-						<div class="form-group col-6 col-sm-3">
-							<lable>Country</lable>
-							<select class="form-control">
-								<option disabled selected>Please select</option>
-								<option>Germany</option>
-								<option>United Kingdom</option>
-								<option>United States of America</option>
-							</select>
+								<div class="form-group col-12 col-sm-2">
+									<lable>State</lable>
+									<input type="text" class="form-control" placeholder="Please fill in">
+								</div>
+
+								<div class="form-group col-6 col-sm-3">
+									<lable>Country</lable>
+									<select class="form-control">
+										<option disabled selected>Please select</option>
+										<option>Germany</option>
+										<option>United Kingdom</option>
+										<option>United States of America</option>
+									</select>
+								</div>
+								
+							</div>
+
 						</div>
 
 					</div>
@@ -82,14 +92,14 @@
 
 					<h3 class="text-muted">My application</h3>
 					
-					<div class="row" data-guidejs="2" data-guidejs-text="This is an even more informative text about the very important highlighted section." data-guidejs-outline>
+					<div class="row" data-guidejs="4" data-guidejs-text="... and in the next step focus the parent, to let the user fill in the rest of the section." data-guidejs-outline>
 
-						<div class="form-group col-12">
+						<div class="form-group col-12" data-guidejs="3" data-guidejs-text="You can also first focus an inner element ..." data-guidejs-outline>
 							<lable>I want to apply for*</lable>
 							<input type="text" class="form-control" placeholder="Please fill in">
 						</div>
 
-						<div class="form-group col-12 col-sm-6">
+						<div class="form-group col-12 col-sm-6" data-guidejs="5" data-guidejs-text="Of course, this also works the other way around." data-guidejs-outline>
 							<lable>Another text field</lable>
 							<input type="text" class="form-control" placeholder="Please fill in">
 						</div>	
@@ -120,7 +130,7 @@
 
 					<h3 class="text-muted">Additional</h3>
 					
-					<div class="row" data-guidejs="3" data-guidejs-text="This text is also very informative." data-guidejs-outline>
+					<div class="row">
 
 						<div class="form-group col-12">
 							<lable>Extra information</lable>
@@ -129,7 +139,7 @@
 
 					</div>
 
-					<div class="mt-4">
+					<div class="mt-4" data-guidejs="6" data-guidejs-outline>
 						<button class="btn btn-danger">Print my application</button>
 						<button class="btn btn-primary float-right">Send my application</button>
 					</div>
@@ -151,12 +161,16 @@
 		
 		$(function() {
 
-			$("body").guide({
-				autostart: true,
+			$("body").guidejs({
 				classes: {
 					nextBtn: "btn btn-success btn-sm",
 					prevBtn: "btn btn-default btn-sm",
 				}
+			});
+
+			$("#start").on('click', function() {
+				$("body").guidejs("start");
+				return false;
 			});
 		});
 
