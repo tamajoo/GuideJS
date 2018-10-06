@@ -4,7 +4,7 @@
 GuideJS is a simple step by step guide to introduce users to features on your website.
 
 ## Demo
-_--- Demo will be added soon. For now you can have a look at the example file(s) for a basic setup ---_
+A simple demo is available [here](http://www.tamajoo.com/GuideJS/examples/example01.html). More demos will follow soon.
 
 ## Installation
 GuideJS is implemented as a jQuery UI Widget and therefore needs jQuery and at least the jQuery UI Widget plugin installed on your website:
@@ -124,6 +124,7 @@ In addition to the callbacks, GuideJS also triggers a few events on the DOM elem
 GuideJS is still heavily under construction and missing some necessary features, which will be added soon:
 
 - Automatic positioning of the text field (so it doesn't leave the viewport)
+- Better behaviour when the viewport size changes
 - Responsive features
 - Dynamic loading of texts (e.g. via ajax)
 
