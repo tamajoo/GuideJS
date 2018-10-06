@@ -58,7 +58,25 @@ Currently available methods are:
 | **_prev_**     | go to the previous step                      |
 
 ### Options
-
+```js
+options: {
+    focusMode: 'self',	// 'self' or 'wrapped' | wheather to wrap the step element with a container or add GuideJS classes directly
+    autostart: false,	// Start the guide right after initialization
+    classes: {		// Your own CSS classes to the GuideJS elements
+	btnContainer: "",
+	nextBtn: "",
+	prevBtn: "",
+	focusContainer: "",
+	infoContainer: "",
+	stepText: "",
+    },
+    delay: null,	// Delay between steps. Defaults to the CSS transition-duration of the .gjs-ghost element
+    locale: "",		// For translations. Defaults to your <html> tags "lang" attribute
+    regional: {}	// Add your translations, e.g. {de: {next: "Weiter", prev: "Zurück"}}
+    
+    // callbacks (see next section below)
+}
+```
 
 ### Callbacks
 You can pass several callbacks as options to control the behaviour of GuideJS:
