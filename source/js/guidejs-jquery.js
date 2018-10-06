@@ -16,6 +16,26 @@
                 stepText: "",
             },
             delay: null,
+
+            // Callbacks            
+            beforeStart: function() {},
+            afterStart: function() {},
+            
+            beforeNext: function() {},
+            afterNext: function() {},
+            
+            beforePrev: function() {},
+            afterPrev: function() {},
+            
+            beforeShowStep: function() {},
+            afterShowStep: function() {},
+            
+            beforeStop: function() {},
+            afterStop: function() {},
+            
+            beforeContinue: function() {},
+            afterContinue: function() {},
+            
         },
 
         regional: {
@@ -189,6 +209,12 @@
 
         _showStep: function() {
 
+            if(this.options.beforeShowStep() === false) {
+                that.element.off("guidejs.step.shown", this.options.afterNext);
+                that.element.off("guidejs.step.shown", this.options.afterPrev);
+                return;
+            }
+
             this._clear();
             this.$stepElem = this.element.find('[data-guidejs="' + this.step + '"]').first();
 
@@ -203,7 +229,8 @@
             var that = this
             setTimeout(function() {
                 that._focusElem();
-                this.element.trigger("guidejs.step.shown", [this, this.$stepElem]);
+                that.element.trigger("guidejs.step.shown", [that, that.$stepElem]);
+                that.options.afterShowStep();
             }, this.options.delay);   
 
         },
@@ -243,33 +270,70 @@
         },
 
         start: function (event) {
+            
+            if(this.options.beforeStart() === false) {
+                return;
+            }
+
             this._prevent(event);
             this.step = 0;
             this.next();
             this._showOverlay();
+
+            this.options.afterStart();
         },
 
         stop: function (event) {
+            
+            if(this.options.beforeStop() === false) {
+                return;
+            }
+
             this._prevent(event);
             this._clear();
             this._hideOverlay();
+
+            this.options.afterStop();
         },
 
         continue: function (event) {
+            
+            if(this.options.beforeContinue() === false) {
+                return;
+            }
+
             this._prevent(event);
             this._showOverlay();
+
+            this.options.afterContinue();
         },
 
         next: function (event) {
+            
+            if(this.options.beforeNext() === false) {
+                return;
+            }
+
+            this.element.one("guidejs.step.shown", this.options.afterNext);
+
             this._prevent(event);
             this.step++;
-            this._showStep();            
+            this._showStep();   
+
         },
 
         prev: function (event) {
+            
+            if(this.options.beforePrev() === false) {
+                return;
+            }
+            
+            this.element.one("guidejs.step.shown", this.options.afterPrev);
+
             this._prevent(event);
             this.step--;
-            this._showStep();            
+            this._showStep();     
+     
         }
 
     });
