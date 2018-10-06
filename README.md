@@ -101,3 +101,15 @@ In addition to the callbacks, GuideJS also triggers a few events on the DOM elem
 | guidejs.initialized |	After GuideJS is initialized.                   | GuideJS Widget                      |
 | guidejs.step.show	  | Step is about to be shown 						| GuideJS Widget, Element to be shown |
 | guidejs.step.shown  |	After the new step is visible to the user       | GuideJS Widget, Element to be shown |
+
+### Upcoming Features
+GuideJS is still heavily under construction and missing some necessary features, which will be added soon:
+
+- Automatic positioning of the text field (so it doesn't leave the viewport)
+- Responsive features
+- Dynamic loading of texts (e.g. via ajax)
+
+### Bugs, Issues and Feature Requests
+For bugs and feature requests, please use [GitHub's issue tracker](https://github.com/tamajoo/GuideJS/issues/new).
+
+For general support on how to use GuideJS, please ask your question on [Stack Overflow](https://stackoverflow.com/).
