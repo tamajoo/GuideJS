@@ -52,8 +52,9 @@
 
         _init: function () {
 
-            this.options = $.extend(true, this.options, this.element.data());
+            this.element.trigger("guidejs.initialize", [this]);
 
+            this.options = $.extend(true, this.options, this.element.data());
             this._setLocale();
 
             this._initOverlay();
@@ -67,6 +68,8 @@
                     }
                 },
             });
+
+            this.element.trigger("guidejs.initialized", [this]);
 
             if(this.options.autostart) {
                 this.start();
@@ -187,18 +190,20 @@
         _showStep: function() {
 
             this._clear();
-
             this.$stepElem = this.element.find('[data-guidejs="' + this.step + '"]').first();
-            
+
             if(!this.$stepElem.length) {
                 return this.stop();
             }
+
+            this.element.trigger("guidejs.step.show", [this, this.$stepElem]);
 
             this._updateGhost();
             
             var that = this
             setTimeout(function() {
                 that._focusElem();
+                this.element.trigger("guidejs.step.shown", [this, this.$stepElem]);
             }, this.options.delay);   
 
         },
