@@ -1,6 +1,6 @@
 (function ($) {
 
-    $.widget("ui.guide", {
+    $.widget("ui.guidejs", {
 
         version: "1",
         options: {
