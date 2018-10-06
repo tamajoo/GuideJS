@@ -167,24 +167,7 @@
 					prevBtn: "btn btn-default btn-sm",
 				},
 
-				beforeStart: function() { alert("Callback: beforeStart"); },
-	            afterStart: function() { alert("Callback: afterStart"); },
-	            beforeNext: function() { alert("Callback: beforeNext"); },
-	            afterNext: function() { alert("Callback: afterNext"); },
-	            beforePrev: function() { alert("Callback: beforePrev"); },
-	            afterPrev: function() { alert("Callback: afterPrev"); },
-	            beforeShowStep: function() { alert("Callback: beforeShowStep"); },
-	            afterShowStep: function() { alert("Callback: afterShowStep"); },
-	            beforeStop: function() { alert("Callback: beforeStop"); },
-	            afterStop: function() { alert("Callback: afterStop"); },
-	            beforeContinue: function() { alert("Callback: beforeContinue"); },
-	            afterContinue: function() { alert("Callback: afterContinue"); },
-
-			})
-			.on("guidejs.initialize", function() { alert("Event: guidejs.initialize"); })
-			.on("guidejs.initialized", function() { alert("Event: guidejs.initialized"); })
-			.on("guidejs.step.show", function() { alert("Event: guidejs.step.show"); })
-			.on("guidejs.step.shown", function() { alert("Event: guidejs.step.shown"); });
+			});
 		});
 
 	</script>
