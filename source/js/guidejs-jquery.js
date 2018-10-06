@@ -4,6 +4,7 @@
 
         version: "1",
         options: {
+            focusMode: 'self', // self|wrapped
             autostart: false,
             locale: "",
             classes: {
@@ -14,7 +15,7 @@
                 infoContainer: "",
                 stepText: "",
             },
-            delay: 300,
+            delay: null,
         },
 
         regional: {
@@ -34,6 +35,7 @@
         $prevBtn: null,
         $stepElem: null,
         $textElem: null,
+        $focusElem: null,
        
         step: 0,
 
@@ -100,6 +102,11 @@
             
             this.$ghost = $('<div class="gjs-ghost">');
             this.$overlay.append(this.$ghost);
+
+            if(this.options.delay === null) {
+                // Use the ghost's css transition duration as delay, if nothing else was defined
+                this.options.delay = parseFloat( getComputedStyle(this.$ghost.get(0))['transitionDuration'] ) * 1000;
+            }
         },
 
         _initButtons: function() {
@@ -125,30 +132,52 @@
         },
 
         _clear: function() {
-            if(this.$textElem) {
-                this.$textElem.remove();
-                this.$textElem = null;
+            if(this.$stepElem) {
+
+                if(this.$textElem) {
+                    this.$textElem.remove();
+                    this.$textElem = null;
+                }
+                
+                this._detachButtons();
+
+                if(this.$focusElem != this.$stepElem) {
+                    this.$stepElem.unwrap();
+                } else {
+                    this.$focusElem
+                        .removeClass('gjs-foc gjs-ol ' + this.options.classes.focusContainer)
+                        .css({backgroundColor: "", outlineColor: ""});
+                }
+
             }
-            this._detachButtons();
-            this.element.find('.gjs-foc > [data-guidejs]').unwrap();
         },
 
-        _wrapElem: function() {
+        _focusElem: function() {
 
-            var $wrap = $('<div class="gjs-foc ' + this.options.classes.focusContainer + '"></div>');
+            var focusMode = this.$stepElem.data("guidejs-focus-mode") || this.options.focusMode;
+
+            switch(focusMode) {
+                case "wrapped":
+                    $wrap = $('<div class="gjs-foc ' + this.options.classes.focusContainer + '"></div>');
+                    this.$stepElem.wrap($wrap);
+                    this.$focusElem = this.$stepElem.parent();
+                break;
+                default:
+                    this.$focusElem = this.$stepElem;
+                    this.$focusElem.addClass('gjs-foc ' + this.options.classes.focusContainer);
+                break;          
+            }
 
             if(this.$stepElem.is("[data-guidejs-outline]")) {
-                $wrap.addClass("gjs-ol");
+                this.$focusElem.addClass("gjs-ol");
             }
 
             if(this.$stepElem.data("guidejs-background")) {
-                $wrap.css({
+                this.$focusElem.css({
                     backgroundColor: this.$stepElem.data("guidejs-background"),
                     outlineColor: this.$stepElem.data("guidejs-background"),
                 });
             }
-
-            this.$stepElem.wrap($wrap);             
 
             this._showButtons();
             this._showText();
@@ -169,40 +198,37 @@
             
             var that = this
             setTimeout(function() {
-                that._wrapElem();
+                that._focusElem();
             }, this.options.delay);   
 
         },
 
         _updateGhost: function() {
-
             var css = this.$stepElem.offset(),
                 scrollTop = $(window).scrollTop();
-
+            
             css.top = css.top - scrollTop;
-            css.width = this.$stepElem.width();
-            css.height = this.$stepElem.height();
+            css.width = this.$stepElem.outerWidth();
+            css.height = this.$stepElem.outerHeight();
+
+            this.$ghost.removeClass("gjs-ol");
+            if(this.$stepElem.is("[data-guidejs-outline]")) {
+                this.$ghost.addClass("gjs-ol");
+            }
 
             this.$ghost.css(css);
-
         },
 
         _showButtons: function() {
-
-            $wrap = this.$stepElem.parent();
-            $wrap.append(this.$btnWrap);
-
+            this.$focusElem.append(this.$btnWrap);
         },
 
-        _showText: function() {
-           
-            $wrap = this.$stepElem.parent();
+        _showText: function() {           
             if(this.$stepElem.data("guidejs-text")) {
                 this.$textElem = $('<div class="gjs-txt ' + this.options.classes.stepText + '"></div>');
                 this.$textElem.html(this.$stepElem.data("guidejs-text"));
-                $wrap.append(this.$textElem);
+                this.$focusElem.append(this.$textElem);
             }
-
         },
 
         _prevent: function(event) {
