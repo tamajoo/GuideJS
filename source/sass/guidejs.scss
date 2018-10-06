@@ -26,7 +26,7 @@
 	position: relative;
     z-index: 999999;
     background: #fff;
-    box-shadow: 0 0 13px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
 
     .gjs-btns {
 		position: absolute;
@@ -69,6 +69,10 @@
 
 .gjs-ol {
     outline: 15px solid #fff;
+
+    &.gjs-foc {
+    	box-shadow: 0 0 13px 15px rgba(0,0,0,0.3);
+    }
 
     .gjs-btns {
 	    margin-top: 20px;

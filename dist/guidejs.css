@@ -23,8 +23,8 @@
   position: relative;
   z-index: 999999;
   background: #fff;
-  -webkit-box-shadow: 0 0 13px 15px rgba(0, 0, 0, 0.3);
-          box-shadow: 0 0 13px 15px rgba(0, 0, 0, 0.3); }
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); }
   .gjs-foc .gjs-btns {
     position: absolute;
     top: 100%;
@@ -58,6 +58,9 @@
 
 .gjs-ol {
   outline: 15px solid #fff; }
+  .gjs-ol.gjs-foc {
+    -webkit-box-shadow: 0 0 13px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 13px 15px rgba(0, 0, 0, 0.3); }
   .gjs-ol .gjs-btns {
     margin-top: 20px;
     margin-right: -15px; }
