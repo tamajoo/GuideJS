@@ -246,12 +246,25 @@
             css.width = this.$stepElem.outerWidth();
             css.height = this.$stepElem.outerHeight();
 
-            this.$ghost.removeClass("gjs-ol");
+            // If user scrolled since last update, make sure ghost position is adjusted accordingly
+           if(this._isDefined(this.$ghost.data("lastScrollTop")) && this.$ghost.data("lastScrollTop") != scrollTop) {
+                var tmpTop = "+=" + (this.$ghost.data("lastScrollTop") - scrollTop);
+                this.$ghost.addClass("gjs-no-anim")
+                    .css({ top: tmpTop });
+                    .removeClass("gjs-no-anim");
+            }
+
+            this.$ghost.data("lastScrollTop", scrollTop).addClass("gjs-show-ghost").removeClass("gjs-ol");
             if(this.$stepElem.is("[data-guidejs-outline]")) {
                 this.$ghost.addClass("gjs-ol");
             }
 
             this.$ghost.css(css);
+
+            var that = this
+            setTimeout(function() {
+                that.$ghost.removeClass("gjs-show-ghost");
+            }, this.options.delay);
         },
 
         _showButtons: function() {
@@ -307,7 +320,7 @@
 
             this._prevent(event);
             this._showOverlay();
-
+            this._showStep();
             this.options.afterContinue();
         },
 

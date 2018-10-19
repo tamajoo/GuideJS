@@ -19,6 +19,15 @@
     	position: absolute;
     	background: #fff;
     	transition: all 0.3s ease-in-out;
+    	opacity: 0;
+
+    	&.gjs-show-ghost {
+    		opacity: 1;
+    	}
+
+    	&.gjs-no-anim {
+    		transition: none;
+    	}
     }
 }
 
