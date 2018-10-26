@@ -35,7 +35,8 @@
     position: absolute;
     top: 100%;
     right: 0;
-    margin-top: 5px; }
+    margin-top: 5px;
+    white-space: nowrap; }
     .gjs-foc .gjs-btns .gjs-btn + .gjs-btn {
       margin-left: 5px; }
 
@@ -49,7 +50,8 @@
           transform: translateY(-50%);
   width: 300px;
   font-size: 0.875em;
-  margin-left: 15px; }
+  margin-left: 15px;
+  color: #323232; }
   .gjs-txt:before {
     content: '';
     width: 0;
@@ -61,6 +63,18 @@
     top: 50%;
     left: -10px;
     margin-top: -10px; }
+  .gjs-txt.gjs-txt-left {
+    left: auto;
+    right: 100%;
+    margin-left: 0;
+    margin-right: 30px; }
+    .gjs-txt.gjs-txt-left:before {
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-right: none;
+      border-left: 10px solid #fff;
+      left: auto;
+      right: -10px; }
 
 .gjs-ol {
   outline: 15px solid #fff; }

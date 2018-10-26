@@ -23,10 +23,10 @@
             beforeStart: function() {},
             afterStart: function() {},
             
-            beforeNext: function() {},
+            beforeNext: function($current, $next) {},
             afterNext: function() {},
             
-            beforePrev: function() {},
+            beforePrev: function($current, $prev) {},
             afterPrev: function() {},
             
             beforeShowStep: function() {},
@@ -60,6 +60,7 @@
         $focusElem: null,
        
         step: 0,
+        _showStepDelay: 0,
 
         _destroy: function () {
             var that = this;
@@ -212,29 +213,36 @@
 
         _showStep: function() {
 
-            if(this.options.beforeShowStep() === false) {
-                that.element.off("guidejs.step.shown", this.options.afterNext);
-                that.element.off("guidejs.step.shown", this.options.afterPrev);
-                return;
-            }
+            var that = this;
 
-            this._clear();
-            this.$stepElem = this.element.find('[data-guidejs="' + this.step + '"]').first();
-
-            if(!this.$stepElem.length) {
-                return this.stop();
-            }
-
-            this.element.trigger("guidejs.step.show", [this, this.$stepElem]);
-
-            this._updateGhost();
-            
-            var that = this
             setTimeout(function() {
-                that._focusElem();
-                that.element.trigger("guidejs.step.shown", [that, that.$stepElem]);
-                that.options.afterShowStep();
-            }, this.options.delay);   
+            
+                that._showStepDelay = 0; // Reset the delay if it was changed
+
+                if(that.options.beforeShowStep() === false) {
+                    that.element.off("guidejs.step.shown", that.options.afterNext);
+                    that.element.off("guidejs.step.shown", that.options.afterPrev);
+                    return;
+                }
+
+                that._clear();
+                that.$stepElem = that.element.find('[data-guidejs="' + that.step + '"]').first();
+
+                if(!that.$stepElem.length) {
+                    return that.stop();
+                }
+
+                that.element.trigger("guidejs.step.show", [that, that.$stepElem]);
+
+                that._updateGhost();
+                
+                setTimeout(function() {
+                    that._focusElem();
+                    that.element.trigger("guidejs.step.shown", [that, that.$stepElem]);
+                    that.options.afterShowStep();
+                }, that.options.delay);
+            
+            }, this._showStepDelay);
 
         },
 
@@ -250,7 +258,7 @@
            if(this._isDefined(this.$ghost.data("lastScrollTop")) && this.$ghost.data("lastScrollTop") != scrollTop) {
                 var tmpTop = "+=" + (this.$ghost.data("lastScrollTop") - scrollTop);
                 this.$ghost.addClass("gjs-no-anim")
-                    .css({ top: tmpTop });
+                    .css({ top: tmpTop })
                     .removeClass("gjs-no-anim");
             }
 
@@ -272,10 +280,25 @@
         },
 
         _showText: function() {           
+            
             if(this.$stepElem.data("guidejs-text")) {
                 this.$textElem = $('<div class="gjs-txt ' + this.options.classes.stepText + '"></div>');
                 this.$textElem.html(this.$stepElem.data("guidejs-text"));
                 this.$focusElem.append(this.$textElem);
+            }
+
+            this._checkTextPosition();
+        },
+
+        _checkTextPosition: function() {
+            this.$textElem.removeClass("gjs-txt-left");
+            var textX = this.$textElem.offset().left,
+                textW = this.$textElem.outerWidth(),
+                containerX = this.element.offset().left,
+                containerW = this.element.width();
+
+            if(textX + textW > containerX + containerW) {
+                this.$textElem.addClass("gjs-txt-left");
             }
         },
 
@@ -326,7 +349,7 @@
 
         next: function (event) {
             
-            if(this.options.beforeNext() === false) {
+            if(this.options.beforeNext( this.$stepElem, this.element.find('[data-guidejs="' + (this.step+1) + '"]').first() ) === false) {
                 return;
             }
 
@@ -334,13 +357,14 @@
 
             this._prevent(event);
             this.step++;
-            this._showStep();   
+
+            this._showStep();
 
         },
 
         prev: function (event) {
             
-            if(this.options.beforePrev() === false) {
+            if(this.options.beforePrev( this.$stepElem, this.element.find('[data-guidejs="' + (this.step-1) + '"]').first() ) === false) {
                 return;
             }
             
@@ -348,8 +372,13 @@
 
             this._prevent(event);
             this.step--;
-            this._showStep();     
+
+            this._showStep();
      
+        },
+
+        delayShowStep: function (delay) {
+            this._showStepDelay = delay;
         }
 
     });
