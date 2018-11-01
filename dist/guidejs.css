@@ -16,11 +16,11 @@
   .gjs-ov .gjs-ghost {
     position: absolute;
     background: #fff;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
     opacity: 0; }
     .gjs-ov .gjs-ghost.gjs-show-ghost {
-      opacity: 1; }
+      opacity: 1;
+      -webkit-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out; }
     .gjs-ov .gjs-ghost.gjs-no-anim {
       -webkit-transition: none;
       transition: none; }

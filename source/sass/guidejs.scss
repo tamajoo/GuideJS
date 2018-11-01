@@ -18,11 +18,11 @@
     .gjs-ghost {
     	position: absolute;
     	background: #fff;
-    	transition: all 0.3s ease-in-out;
     	opacity: 0;
 
     	&.gjs-show-ghost {
     		opacity: 1;
+	    	transition: all 0.3s ease-in-out;
     	}
 
     	&.gjs-no-anim {
@@ -66,15 +66,15 @@
 
 	&:before {
 		content: '';
-		width: 0; 
-		height: 0; 
+		width: 0;
+		height: 0;
 		border-top: 10px solid transparent;
-		border-bottom: 10px solid transparent; 
+		border-bottom: 10px solid transparent;
 		border-right:10px solid #fff;
 		position: absolute;
 		top: 50%;
 		left: -10px;
-		margin-top: -10px;	
+		margin-top: -10px;
 	}
 
 	&.gjs-txt-left {
@@ -85,10 +85,10 @@
 
 	    &:before {
 			border-top: 10px solid transparent;
-			border-bottom: 10px solid transparent; 
+			border-bottom: 10px solid transparent;
 			border-right: none;
 			border-left: 10px solid #fff;
-			left: auto;	
+			left: auto;
 			right: -10px
 		}
 	}

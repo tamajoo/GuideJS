@@ -19,25 +19,25 @@
 
             regional: {},
 
-            // Callbacks            
+            // Callbacks
             beforeStart: function() {},
             afterStart: function() {},
-            
+
             beforeNext: function($current, $next) {},
             afterNext: function() {},
-            
+
             beforePrev: function($current, $prev) {},
             afterPrev: function() {},
-            
+
             beforeShowStep: function() {},
             afterShowStep: function() {},
-            
+
             beforeStop: function() {},
             afterStop: function() {},
-            
+
             beforeContinue: function() {},
             afterContinue: function() {},
-            
+
         },
 
         regional: {
@@ -58,8 +58,8 @@
         $stepElem: null,
         $textElem: null,
         $focusElem: null,
-       
-        step: 0,
+
+        step: -1,
         _showStepDelay: 0,
 
         _destroy: function () {
@@ -70,7 +70,7 @@
         },
 
         _create: function () {
-            
+
         },
 
         _init: function () {
@@ -98,7 +98,7 @@
             if(this.options.autostart) {
                 this.start();
             }
-            
+
         },
 
         _isDefined: function(something) {
@@ -126,13 +126,15 @@
             this.$overlay = $('<div class="gjs-ov">');
             this._on(this.$overlay, {"click": this.stop});
             this.element.append(this.$overlay);
-            
+
             this.$ghost = $('<div class="gjs-ghost">');
             this.$overlay.append(this.$ghost);
 
             if(this.options.delay === null) {
                 // Use the ghost's css transition duration as delay, if nothing else was defined
+				this.$ghost.addClass("gjs-show-ghost");
                 this.options.delay = parseFloat( getComputedStyle(this.$ghost.get(0))['transitionDuration'] ) * 1000;
+				this.$ghost.removeClass("gjs-show-ghost");
             }
         },
 
@@ -165,7 +167,7 @@
                     this.$textElem.remove();
                     this.$textElem = null;
                 }
-                
+
                 this._detachButtons();
 
                 if(this.$focusElem != this.$stepElem) {
@@ -192,7 +194,7 @@
                 default:
                     this.$focusElem = this.$stepElem;
                     this.$focusElem.addClass('gjs-foc ' + this.options.classes.focusContainer);
-                break;          
+                break;
             }
 
             if(this.$stepElem.is("[data-guidejs-outline]")) {
@@ -216,7 +218,7 @@
             var that = this;
 
             setTimeout(function() {
-            
+
                 that._showStepDelay = 0; // Reset the delay if it was changed
 
                 if(that.options.beforeShowStep() === false) {
@@ -228,20 +230,27 @@
                 that._clear();
                 that.$stepElem = that.element.find('[data-guidejs="' + that.step + '"]').first();
 
+				console.log(that.$stepElem, that.step); debugger;
+
                 if(!that.$stepElem.length) {
                     return that.stop();
-                }
+                } else if(!that.$stepElem.is(":visible")) {
+					return that.next();
+				}
 
                 that.element.trigger("guidejs.step.show", [that, that.$stepElem]);
 
                 that._updateGhost();
-                
+
                 setTimeout(function() {
                     that._focusElem();
                     that.element.trigger("guidejs.step.shown", [that, that.$stepElem]);
                     that.options.afterShowStep();
+
+					// scroll to new step
+					$("html, body").stop().animate({scrollTop: ( Math.floor(that.$focusElem.offset().top - ($(window).height() / 2)) ) }, 300);
                 }, that.options.delay);
-            
+
             }, this._showStepDelay);
 
         },
@@ -249,7 +258,7 @@
         _updateGhost: function() {
             var css = this.$stepElem.offset(),
                 scrollTop = $(window).scrollTop();
-            
+
             css.top = css.top - scrollTop;
             css.width = this.$stepElem.outerWidth();
             css.height = this.$stepElem.outerHeight();
@@ -279,8 +288,8 @@
             this.$focusElem.append(this.$btnWrap);
         },
 
-        _showText: function() {           
-            
+        _showText: function() {
+
             if(this.$stepElem.data("guidejs-text")) {
                 this.$textElem = $('<div class="gjs-txt ' + this.options.classes.stepText + '"></div>');
                 this.$textElem.html(this.$stepElem.data("guidejs-text"));
@@ -309,13 +318,16 @@
         },
 
         start: function (event) {
-            
-            if(this.options.beforeStart() === false) {
+
+			var ret = this.options.beforeStart();
+            if(ret === false) {
                 return;
-            }
+            } else {
+				this._showStepDelay = parseInt(ret) || this._showStepDelay;
+			}
 
             this._prevent(event);
-            this.step = 0;
+            this.step = -1;
             this.next();
             this._showOverlay();
 
@@ -323,7 +335,7 @@
         },
 
         stop: function (event) {
-            
+
             if(this.options.beforeStop() === false) {
                 return;
             }
@@ -336,7 +348,7 @@
         },
 
         continue: function (event) {
-            
+
             if(this.options.beforeContinue() === false) {
                 return;
             }
@@ -348,10 +360,13 @@
         },
 
         next: function (event) {
-            
-            if(this.options.beforeNext( this.$stepElem, this.element.find('[data-guidejs="' + (this.step+1) + '"]').first() ) === false) {
+
+			var ret = this.options.beforeNext( this.$stepElem, this.element.find('[data-guidejs="' + (this.step+1) + '"]').first() );
+            if(ret === false) {
                 return;
-            }
+            } else {
+		        this._showStepDelay = parseInt(ret) || this._showStepDelay;
+			}
 
             this.element.one("guidejs.step.shown", this.options.afterNext);
 
@@ -363,23 +378,22 @@
         },
 
         prev: function (event) {
-            
-            if(this.options.beforePrev( this.$stepElem, this.element.find('[data-guidejs="' + (this.step-1) + '"]').first() ) === false) {
+
+			var ret = this.options.beforePrev( this.$stepElem, this.element.find('[data-guidejs="' + (this.step-1) + '"]').first() );
+            if(ret === false) {
                 return;
-            }
-            
+            } else {
+		        this._showStepDelay = parseInt(ret) || this._showStepDelay;
+			}
+
             this.element.one("guidejs.step.shown", this.options.afterPrev);
 
             this._prevent(event);
             this.step--;
 
             this._showStep();
-     
-        },
 
-        delayShowStep: function (delay) {
-            this._showStepDelay = delay;
-        }
+        },
 
     });
 
