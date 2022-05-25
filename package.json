@@ -8,7 +8,7 @@
     "url": "https://github.com/tamajoo/guide.js"
   },
   "devDependencies": {
-    "grunt": "~1.0.3",
+    "grunt": "~1.5.3",
     "grunt-contrib-sass": "latest",
     "grunt-postcss": "latest",
     "autoprefixer": "latest",
